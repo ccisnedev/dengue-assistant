@@ -3,7 +3,7 @@
 
 Proceso DiagnosticoDengue
     // Definición de variables
-    Definir fiebre, dolorCabeza, dolorMuscular, dolorOcular, nauseas, rash, dolorAbdomen, sangrado, debilidad, dificultadRespirar, zonaRiesgo Como Caracter
+    Definir fiebre, dolorCabeza, dolorMuscular, dolorOcular, nauseas, rash, dolorAbdomen, sangrado, debilidad, dificultadRespirar, zonaRiesgo Como Entero
     Definir diasFiebre, intensidadFiebre, vecesVomito Como Entero
     Definir tipoSangrado Como Cadena
     Definir sintomasIniciales, signosAlarma Como Entero
@@ -14,10 +14,11 @@ Proceso DiagnosticoDengue
     signosAlarma <- 0
 	
     // 1. Fiebre
-    Escribir "1 ¿Tiene fiebre actualmente o en los últimos días? (SI/NO)"
+    Escribir "1. ¿Tiene fiebre actualmente o en los últimos días?"
+    Escribir "   1 = SI         2 = NO"
+    Escribir "   (Escribe solo el número)"
     Leer fiebre
-    fiebre <- fiebre
-    Si fiebre = "SI" Entonces
+    Si fiebre = 1 Entonces
         Escribir "   ¿Cuántos días lleva con fiebre? (número entero)"
         Leer diasFiebre
         Escribir "   ¿Qué tan alta diría que es la fiebre?"
@@ -26,33 +27,38 @@ Proceso DiagnosticoDengue
     FinSi
 	
     // 2. Dolor de cabeza
-    Escribir "2 ¿Ha tenido dolor de cabeza muy intenso? (SI/NO)"
+    Escribir "2. ¿Ha tenido dolor de cabeza muy intenso?"
+    Escribir "   1 = SI         2 = NO"
+    Escribir "   (Escribe solo el número)"
     Leer dolorCabeza
-    dolorCabeza <- dolorCabeza
 	
     // 3. Dolores musculares/articulares
-    Escribir "3 ¿Siente dolores fuertes en músculos o articulaciones? (SI/NO)"
+    Escribir "3. ¿Siente dolores fuertes en músculos o articulaciones?"
+    Escribir "   1 = SI         2 = NO"
+    Escribir "   (Escribe solo el número)"
     Leer dolorMuscular
-    dolorMuscular <- dolorMuscular
 	
     // 4. Dolor retro-ocular
-    Escribir "4 ¿Siente dolor detrás de los ojos al moverlos o mirar? (SI/NO)"
+    Escribir "4. ¿Siente dolor detrás de los ojos al moverlos o mirar?"
+    Escribir "   1 = SI         2 = NO"
+    Escribir "   (Escribe solo el número)"
     Leer dolorOcular
-    dolorOcular <- dolorOcular
 	
     // 5. Náuseas o vómitos
-    Escribir "5 ¿Ha tenido náuseas o vómitos? (SI/NO)"
+    Escribir "5. ¿Ha tenido náuseas o vómitos?"
+    Escribir "   1 = SI         2 = NO"
+    Escribir "   (Escribe solo el número)"
     Leer nauseas
-    nauseas <- nauseas
-    Si nauseas = "SI" Entonces
+    Si nauseas = 1 Entonces
         Escribir "   ¿Cuántas veces vomitó en 24 horas? (número entero)"
         Leer vecesVomito
     FinSi
 	
     // 6. Erupción cutánea
-    Escribir "6 ¿Ha notado sarpullido o erupciones en la piel? (SI/NO)"
+    Escribir "6. ¿Ha notado sarpullido o erupciones en la piel?"
+    Escribir "   1 = SI         2 = NO"
+    Escribir "   (Escribe solo el número)"
     Leer rash
-    rash <- rash
 	
     // 7. Dolor abdominal intenso (signo de alarma)
     Escribir "7 ¿Tiene dolor abdominal muy fuerte? (SI/NO)"
