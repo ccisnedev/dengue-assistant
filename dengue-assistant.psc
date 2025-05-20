@@ -4,8 +4,6 @@
 Proceso DiagnosticoDengue
     // Definición de variables
     Definir fiebre, dolorCabeza, dolorMuscular, dolorOcular, nauseas, rash, dolorAbdomen, sangrado, debilidad, dificultadRespirar, zonaRiesgo Como Entero
-    Definir diasFiebre, intensidadFiebre, vecesVomito Como Entero
-    Definir tipoSangrado Como Cadena
     Definir sintomasIniciales, signosAlarma Como Entero
     Definir probableDengue Como Logico
 	
@@ -18,13 +16,6 @@ Proceso DiagnosticoDengue
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer fiebre
-    Si fiebre = 1 Entonces
-        Escribir "   ¿Cuántos días lleva con fiebre? (número entero)"
-        Leer diasFiebre
-        Escribir "   ¿Qué tan alta diría que es la fiebre?"
-        Escribir "   (1=Moderada, 2=Alta, 3=Muy alta)"
-        Leer intensidadFiebre
-    FinSi
 	
     // 2. Dolor de cabeza
     Escribir "2. ¿Ha tenido dolor de cabeza muy intenso?"
@@ -49,10 +40,6 @@ Proceso DiagnosticoDengue
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer nauseas
-    Si nauseas = 1 Entonces
-        Escribir "   ¿Cuántas veces vomitó en 24 horas? (número entero)"
-        Leer vecesVomito
-    FinSi
 	
     // 6. Erupción cutánea
     Escribir "6. ¿Ha notado sarpullido o erupciones en la piel?"
@@ -71,11 +58,6 @@ Proceso DiagnosticoDengue
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer sangrado
-    Si sangrado = 1 Entonces
-        Escribir "   ¿De dónde proviene el sangrado?"
-        Escribir "   (encías/nariz/moretones/vómito con sangre/heces con sangre)"
-        Leer tipoSangrado
-    FinSi
 	
     // 9. Debilidad extrema o irritabilidad (signo de alarma)
     Escribir "9. ¿Se siente extremadamente débil, somnoliento/a o muy inquieto/a?"
@@ -150,4 +132,3 @@ Proceso DiagnosticoDengue
     FinSi
 
 FinProceso
-
