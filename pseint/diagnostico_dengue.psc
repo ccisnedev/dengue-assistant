@@ -126,6 +126,7 @@ Proceso DiagnosticoDengue
         Escribir "    --> BUSQUE ATENCIÓN MÉDICA DE INMEDIATO <--"
     Sino
         Si probableDengue Entonces
+            Escribir ""
             Escribir "[!] POSIBLE DENGUE NO GRAVE"
             Escribir "    Acuda a evaluación médica lo antes posible."
         Sino
