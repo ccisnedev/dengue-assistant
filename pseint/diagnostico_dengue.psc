@@ -46,18 +46,21 @@ Proceso DiagnosticoDengue
     Leer nauseas
 	
     // 6. Erupción cutánea
+    Escribir ""
     Escribir "6. ¿Ha notado sarpullido o erupciones en la piel?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer rash
 	
     // 7. Dolor abdominal intenso (signo de alarma)
+    Escribir ""
     Escribir "7. ¿Tiene dolor abdominal muy fuerte?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer dolorAbdomen
 	
     // 8. Sangrado inusual (signo de alarma)
+    Escribir ""
     Escribir "8. ¿Ha notado algún sangrado inusual?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
