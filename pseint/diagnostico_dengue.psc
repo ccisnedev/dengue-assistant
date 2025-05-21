@@ -18,24 +18,28 @@ Proceso DiagnosticoDengue
     Leer fiebre
 	
     // 2. Dolor de cabeza
+    Escribir ""
     Escribir "2. ¿Ha tenido dolor de cabeza muy intenso?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer dolorCabeza
 	
     // 3. Dolores musculares/articulares
+    Escribir ""
     Escribir "3. ¿Siente dolores fuertes en músculos o articulaciones?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer dolorMuscular
 	
     // 4. Dolor retro-ocular
+    Escribir ""
     Escribir "4. ¿Siente dolor detrás de los ojos al moverlos o mirar?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer dolorOcular
 	
     // 5. Náuseas o vómitos
+    Escribir ""
     Escribir "5. ¿Ha tenido náuseas o vómitos?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
