@@ -24,60 +24,70 @@ Proceso DiagnosticoDengue
     Leer fiebre
 	
     // 2. Dolor de cabeza
+    Escribir ""
     Escribir "2. ¿Ha tenido dolor de cabeza muy intenso?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer dolorCabeza
 	
     // 3. Dolores musculares/articulares
+    Escribir ""
     Escribir "3. ¿Siente dolores fuertes en músculos o articulaciones?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer dolorMuscular
 	
     // 4. Dolor retro-ocular
+    Escribir ""
     Escribir "4. ¿Siente dolor detrás de los ojos al moverlos o mirar?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer dolorOcular
 	
     // 5. Náuseas o vómitos
+    Escribir ""
     Escribir "5. ¿Ha tenido náuseas o vómitos?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer nauseas
 	
     // 6. Erupción cutánea
+    Escribir ""
     Escribir "6. ¿Ha notado sarpullido o erupciones en la piel?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer rash
 	
     // 7. Dolor abdominal intenso (signo de alarma)
+    Escribir ""
     Escribir "7. ¿Tiene dolor abdominal muy fuerte?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer dolorAbdomen
 	
     // 8. Sangrado inusual (signo de alarma)
+    Escribir ""
     Escribir "8. ¿Ha notado algún sangrado inusual?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer sangrado
 	
     // 9. Debilidad extrema o irritabilidad (signo de alarma)
+    Escribir ""
     Escribir "9. ¿Se siente extremadamente débil, somnoliento/a o muy inquieto/a?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer debilidad
 	
     // 10. Dificultad para respirar (signo de alarma)
+    Escribir ""
     Escribir "10. ¿Tiene dificultad para respirar o respiración muy acelerada?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer dificultadRespirar
 	
     // 11. Contexto epidemiológico
+    Escribir ""
     Escribir "11. ¿Vive o viajó recientemente en una zona con casos de dengue?"
     Escribir "   1 = SI         2 = NO         3 = NO SABE"
     Escribir "   (Escribe solo el número)"
