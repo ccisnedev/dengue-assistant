@@ -67,18 +67,21 @@ Proceso DiagnosticoDengue
     Leer sangrado
 	
     // 9. Debilidad extrema o irritabilidad (signo de alarma)
+    Escribir ""
     Escribir "9. ¿Se siente extremadamente débil, somnoliento/a o muy inquieto/a?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer debilidad
 	
     // 10. Dificultad para respirar (signo de alarma)
+    Escribir ""
     Escribir "10. ¿Tiene dificultad para respirar o respiración muy acelerada?"
     Escribir "   1 = SI         2 = NO"
     Escribir "   (Escribe solo el número)"
     Leer dificultadRespirar
 	
     // 11. Contexto epidemiológico
+    Escribir ""
     Escribir "11. ¿Vive o viajó recientemente en una zona con casos de dengue?"
     Escribir "   1 = SI         2 = NO         3 = NO SABE"
     Escribir "   (Escribe solo el número)"
