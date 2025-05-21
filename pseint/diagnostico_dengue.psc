@@ -115,20 +115,26 @@ Proceso DiagnosticoDengue
     probableDengue <- (fiebre = 1 Y (sintomasIniciales >= 2))
 	
     // Resultado final
+    Escribir ""
+    Escribir "********************************************"
+    Escribir "*              RESULTADO FINAL             *"
+    Escribir "********************************************"
+    Escribir ""
+    
     Si signosAlarma > 0 Entonces
-        Escribir ""
-        Escribir ">>> Signos de alarma detectados: Posible dengue grave."
-        Escribir "    **Busque atención médica de inmediato**."
+        Escribir "[!] SIGNOS DE ALARMA DETECTADOS: POSIBLE DENGUE GRAVE"
+        Escribir "    --> BUSQUE ATENCIÓN MÉDICA DE INMEDIATO <--"
     Sino
         Si probableDengue Entonces
-            Escribir ""
-            Escribir ">>> Posible dengue no grave."
+            Escribir "[!] POSIBLE DENGUE NO GRAVE"
             Escribir "    Acuda a evaluación médica lo antes posible."
         Sino
-            Escribir ""
-            Escribir ">>> Poco probable dengue."
+            Escribir "[ ] POCO PROBABLE DENGUE"
             Escribir "    Si sus síntomas persisten o empeoran, consulte con un médico."
         FinSi
     FinSi
+    
+    Escribir ""
+    Escribir "--------------------------------------------"
 
 FinProceso
