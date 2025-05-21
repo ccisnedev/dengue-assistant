@@ -11,6 +11,12 @@ Proceso DiagnosticoDengue
     sintomasIniciales <- 0
     signosAlarma <- 0
 	
+    // Encabezado inicial
+    Escribir "********************************************"
+    Escribir "*     ASISTENTE DE DIAGNÓSTICO DE DENGUE    *"
+    Escribir "********************************************"
+    Escribir ""
+    
     // 1. Fiebre
     Escribir "1. ¿Tiene fiebre actualmente o en los últimos días?"
     Escribir "   1 = SI         2 = NO"
