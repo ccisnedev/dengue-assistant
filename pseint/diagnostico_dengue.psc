@@ -12,6 +12,7 @@ Proceso DiagnosticoDengue
     signosAlarma <- 0
 	
     // Encabezado inicial
+    Escribir ""
     Escribir "********************************************"
     Escribir "*     ASISTENTE DE DIAGNÓSTICO DE DENGUE    *"
     Escribir "********************************************"
