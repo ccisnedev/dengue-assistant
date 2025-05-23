@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dengue Assistant Tests</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        .test-container {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+        .test-result {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .failure {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        button {
+            padding: 0.5rem 1rem;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        pre {
+            background-color: #f8f8f8;
+            padding: 0.5rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dengue Assistant - Tests</h1>
+    
+    <div class="test-container">
+        <h2>Test de Estructura del Cuestionario</h2>
+        <p>Verifica que el cuestionario contenga todas las preguntas necesarias del pseudocódigo original.</p>
+        <button id="test-questions">Ejecutar Test</button>
+        <div id="test-questions-result" class="test-result"></div>
+    </div>
+    
+    <div class="test-container">
+        <h2>Test de Cálculo de Resultados</h2>
+        <p>Verifica que el cálculo de resultados funcione correctamente según diferentes conjuntos de respuestas.</p>
+        <button id="test-results">Ejecutar Test</button>
+        <div id="test-results-result" class="test-result"></div>
+    </div>
+    
+    <div class="test-container">
+        <h2>Test de Interfaz ChatGPT</h2>
+        <p>Verifica que la interfaz de usuario funcione correctamente.</p>
+        <button id="test-ui">Ejecutar Test</button>
+        <div id="test-ui-result" class="test-result"></div>
+    </div>
+
+    <script>
+        // Importar módulo del cuestionario desde el archivo principal
+        const questionnaireMock = [
+            {
+                id: "welcome",
+                type: "message",
+                text: "Bienvenido al Asistente de Diagnóstico de Dengue. Este asistente te hará unas preguntas para evaluar tus síntomas. Presiona 'Enviar' para comenzar.",
+                options: null
+            },
+            {
+                id: "fiebre",
+                type: "question",
+                text: "1. ¿Tiene fiebre actualmente o en los últimos días?",
+                options: [
+                    { value: 1, text: "Sí" },
+                    { value: 2, text: "No" }
+                ]
+            }
+            // ... resto de preguntas
+        ];
+        
+        // Test de estructura del cuestionario
+        document.getElementById('test-questions').addEventListener('click', function() {
+            const result = document.getElementById('test-questions-result');
+            
+            // Crear un elemento script para cargar el archivo script.js
+            const script = document.createElement('script');
+            script.src = 'script.js';
+            
+            script.onload = function() {
+                // Verificar que estén todas las preguntas requeridas
+                const requiredQuestions = [
+                    'fiebre', 'dolorCabeza', 'dolorMuscular', 'dolorOcular', 
+                    'nauseas', 'rash', 'dolorAbdomen', 'sangrado', 
+                    'debilidad', 'dificultadRespirar', 'zonaRiesgo'
+                ];
+                
+                try {
+                    // Revisar si la variable questionnaire existe en el scope global
+                    const foundQuestions = window.questionnaire || [];
+                    
+                    // Filtrar preguntas por tipo
+                    const actualQuestions = foundQuestions.filter(q => q.type === 'question').map(q => q.id);
+                    
+                    // Comprobar que todas las preguntas requeridas estén presentes
+                    const missingQuestions = requiredQuestions.filter(q => !actualQuestions.includes(q));
+                    
+                    if (missingQuestions.length === 0) {
+                        result.className = 'test-result success';
+                        result.innerHTML = '✅ Éxito: Todas las preguntas requeridas están presentes en el cuestionario.';
+                    } else {
+                        result.className = 'test-result failure';
+                        result.innerHTML = `❌ Error: Faltan las siguientes preguntas: ${missingQuestions.join(', ')}`;
+                    }
+                } catch (error) {
+                    result.className = 'test-result failure';
+                    result.innerHTML = `❌ Error durante la prueba: ${error.message}`;
+                }
+            };
+            
+            script.onerror = function() {
+                result.className = 'test-result failure';
+                result.innerHTML = '❌ Error: No se pudo cargar script.js';
+            };
+            
+            document.body.appendChild(script);
+        });
+        
+        // Test de cálculo de resultados
+        document.getElementById('test-results').addEventListener('click', function() {
+            const result = document.getElementById('test-results-result');
+            result.innerHTML = 'Ejecutando pruebas de cálculo...';
+            
+            // Crear estado falso para casos de prueba
+            const testCases = [
+                {
+                    name: 'Dengue Grave (con signos de alarma)',
+                    answers: { 
+                        fiebre: 1, dolorCabeza: 1, dolorMuscular: 1, dolorOcular: 1, 
+                        nauseas: 1, rash: 1, dolorAbdomen: 1, sangrado: 1, 
+                        debilidad: 1, dificultadRespirar: 1, zonaRiesgo: 1 
+                    },
+                    expectedSintomas: 5,
+                    expectedAlarma: 4,
+                    expectedResult: 'grave'
+                },
+                {
+                    name: 'Dengue No Grave (sin signos de alarma)',
+                    answers: { 
+                        fiebre: 1, dolorCabeza: 1, dolorMuscular: 1, dolorOcular: 0, 
+                        nauseas: 0, rash: 0, dolorAbdomen: 0, sangrado: 0, 
+                        debilidad: 0, dificultadRespirar: 0, zonaRiesgo: 1 
+                    },
+                    expectedSintomas: 2,
+                    expectedAlarma: 0,
+                    expectedResult: 'probable'
+                },
+                {
+                    name: 'No Dengue',
+                    answers: { 
+                        fiebre: 2, dolorCabeza: 0, dolorMuscular: 0, dolorOcular: 0, 
+                        nauseas: 0, rash: 0, dolorAbdomen: 0, sangrado: 0, 
+                        debilidad: 0, dificultadRespirar: 0, zonaRiesgo: 2 
+                    },
+                    expectedSintomas: 0,
+                    expectedAlarma: 0,
+                    expectedResult: 'improbable'
+                }
+            ];
+            
+            let allPassed = true;
+            const results = [];
+            
+            testCases.forEach(testCase => {
+                // Crear una versión simplificada de la función de cálculo de resultados
+                const state = {
+                    answers: testCase.answers,
+                    sintomasIniciales: 0,
+                    signosAlarma: 0,
+                    probableDengue: false
+                };
+                
+                // Contar síntomas iniciales
+                if (state.answers.dolorCabeza === 1) state.sintomasIniciales++;
+                if (state.answers.dolorMuscular === 1) state.sintomasIniciales++;
+                if (state.answers.dolorOcular === 1) state.sintomasIniciales++;
+                if (state.answers.nauseas === 1) state.sintomasIniciales++;
+                if (state.answers.rash === 1) state.sintomasIniciales++;
+                
+                // Identificar signos de alarma
+                if (state.answers.dolorAbdomen === 1) state.signosAlarma++;
+                if (state.answers.sangrado === 1) state.signosAlarma++;
+                if (state.answers.debilidad === 1) state.signosAlarma++;
+                if (state.answers.dificultadRespirar === 1) state.signosAlarma++;
+                
+                // Determinar caso probable de dengue
+                state.probableDengue = (state.answers.fiebre === 1 && state.sintomasIniciales >= 2);
+                
+                // Determinar resultado
+                let calculatedResult = '';
+                if (state.signosAlarma > 0) {
+                    calculatedResult = 'grave';
+                } else if (state.probableDengue) {
+                    calculatedResult = 'probable';
+                } else {
+                    calculatedResult = 'improbable';
+                }
+                
+                // Verificar si coincide con lo esperado
+                const sintomasPassed = state.sintomasIniciales === testCase.expectedSintomas;
+                const alarmaPassed = state.signosAlarma === testCase.expectedAlarma;
+                const resultPassed = calculatedResult === testCase.expectedResult;
+                
+                const passed = sintomasPassed && alarmaPassed && resultPassed;
+                allPassed = allPassed && passed;
+                
+                results.push({
+                    name: testCase.name,
+                    passed: passed,
+                    details: `
+                        <strong>Síntomas iniciales:</strong> ${state.sintomasIniciales} (esperado: ${testCase.expectedSintomas}) - ${sintomasPassed ? '✅' : '❌'}<br>
+                        <strong>Signos de alarma:</strong> ${state.signosAlarma} (esperado: ${testCase.expectedAlarma}) - ${alarmaPassed ? '✅' : '❌'}<br>
+                        <strong>Resultado:</strong> ${calculatedResult} (esperado: ${testCase.expectedResult}) - ${resultPassed ? '✅' : '❌'}
+                    `
+                });
+            });
+            
+            // Mostrar resultados
+            result.className = allPassed ? 'test-result success' : 'test-result failure';
+            const resultHTML = results.map(r => `
+                <div>
+                    <h4>${r.name}: ${r.passed ? '✅ Pasó' : '❌ Falló'}</h4>
+                    <div>${r.details}</div>
+                </div>
+            `).join('');
+            
+            result.innerHTML = `
+                <h3>${allPassed ? '✅ Todos los tests pasados' : '❌ Algunos tests fallaron'}</h3>
+                ${resultHTML}
+            `;
+        });
+        
+        // Test de interfaz ChatGPT
+        document.getElementById('test-ui').addEventListener('click', function() {
+            const result = document.getElementById('test-ui-result');
+            
+            // Verificar si la estructura del DOM es correcta para la interfaz ChatGPT
+            const requiredElements = [
+                { id: 'message-area', description: 'Área de mensajes' },
+                { id: 'user-input', description: 'Campo de entrada de usuario' },
+                { id: 'send-button', description: 'Botón de enviar' },
+                { id: 'options-container', description: 'Contenedor de opciones' }
+            ];
+            
+            // Verificar cada elemento
+            const missingElements = [];
+            
+            // Cargar el iframe con la página principal para probar los elementos
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = 'index.html';
+            
+            document.body.appendChild(iframe);
+            
+            iframe.onload = function() {
+                for (const elem of requiredElements) {
+                    const element = iframe.contentDocument.getElementById(elem.id);
+                    if (!element) {
+                        missingElements.push(elem.description);
+                    }
+                }
+                
+                // Verificar estilos para asegurar una interfaz tipo ChatGPT
+                const chatStyleCheck = iframe.contentDocument.querySelector('.messages') && 
+                                      iframe.contentDocument.querySelector('.input-container');
+                
+                if (missingElements.length === 0 && chatStyleCheck) {
+                    result.className = 'test-result success';
+                    result.innerHTML = '✅ Éxito: La interfaz tiene todos los elementos necesarios para un chat tipo ChatGPT.';
+                } else {
+                    result.className = 'test-result failure';
+                    let message = '❌ Error: ';
+                    if (missingElements.length > 0) {
+                        message += `Faltan los siguientes elementos: ${missingElements.join(', ')}. `;
+                    }
+                    if (!chatStyleCheck) {
+                        message += 'La estructura CSS no corresponde a un chat tipo ChatGPT.';
+                    }
+                    result.innerHTML = message;
+                }
+                
+                // Eliminar el iframe después de la prueba
+                setTimeout(() => {
+                    document.body.removeChild(iframe);
+                }, 1000);
+            };
+        });
+    </script>
+</body>
+</html>

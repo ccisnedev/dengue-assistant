@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <!-- Encabezado -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dengue Assistant</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <!-- Cuerpo -->
+    <body>
+        <div class="app-container">
+            <header class="app-header">
+                <h1>Asistente de Diagnóstico de Dengue</h1>
+            </header>
+
+            <main id="chat-container" class="chat-container">
+                <div class="messages" id="message-area">
+                    <!-- Messages will be added here dynamically -->
+                </div>
+            </main>
+
+            <footer class="input-container" id="input-container">
+                <!-- Botón de iniciar centrado y estilizado -->
+                <div class="start-wrapper" id="start-wrapper">
+                    <button id="start-button" class="start-button blue-centered">Iniciar</button>
+                </div>
+                <div class="options-container" id="options-container" style="display: none;">
+                    <!-- Option buttons will be added here dynamically -->
+                </div>
+            </footer>
+        </div>
+
+        <script src="script.js" type="module"></script>
+    </body>
+</html>
