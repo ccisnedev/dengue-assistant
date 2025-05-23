@@ -12,6 +12,9 @@ Dengue Assistant es un proyecto abierto cuyo objetivo es ayudar en la detección
 - 📝 **Pseudocódigo:** Como siguiente paso, se ha desarrollado un programa en pseudocódigo utilizando PSeInt, el cual será empleado para pruebas y validaciones iniciales antes de implementar la lógica en una aplicación real.
   - El archivo [`dengue-assistant.psc`](./dengue-assistant.psc) está escrito en pseudocódigo para [PSeInt](https://pseint.sourceforge.net/). Puedes descargar PSeInt desde su [sitio oficial](https://pseint.sourceforge.net/).
 
+- 💻 **Demo web:** En la carpeta [`docs/`](./docs/) encontrarás una demo funcional del cuestionario, implementada con HTML, CSS y JavaScript. Puedes abrir el archivo `index.html` en tu navegador para probar cómo funciona la lógica del cuestionario de manera interactiva.  
+  - También puedes probar la demo en línea aquí: [Ver demo web](https://ccisnedev-open.github.io/dengue-assistant/)
+
 ## Roadmap
 
 1. **Investigación:** Revisión de literatura y guías clínicas sobre síntomas y signos de alarma del dengue.
