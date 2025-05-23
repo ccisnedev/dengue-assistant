@@ -18,7 +18,7 @@ const questionnaire = [
     {
         id: "welcome",
         type: "message",
-        text: "Bienvenido al Asistente de Diagnóstico de Dengue. Este asistente te hará unas preguntas para evaluar tus síntomas. Presiona 'Enviar' para comenzar.",
+        text: "Bienvenido al Asistente de Diagnóstico de Dengue. Este asistente te hará unas preguntas para evaluar tus síntomas. Presiona 'Iniciar' para comenzar.",
         options: null
     },
     {
@@ -125,89 +125,68 @@ const questionnaire = [
 
 // Elementos del DOM
 const messageArea = document.getElementById('message-area');
-const userInput = document.getElementById('user-input');
-const sendButton = document.getElementById('send-button');
-const inputWrapper = document.getElementById('input-wrapper');
+const chatContainer = document.getElementById('chat-container');
+// Elimina inputWrapper y userInput
+const startWrapper = document.getElementById('start-wrapper');
+const startButton = document.getElementById('start-button');
 const optionsContainer = document.getElementById('options-container');
 
 // Inicializar la aplicación
 function init() {
     state.questionnaire = [...questionnaire];
+    // Mostrar mensaje de bienvenida siempre al iniciar
+    messageArea.innerHTML = '';
     displayMessage(state.questionnaire[0].text, 'assistant');
     setupEventListeners();
     state.currentQuestion = 0;
+    startWrapper.style.display = 'flex';
+    optionsContainer.style.display = 'none';
 }
 
 // Configurar escuchadores de eventos
 function setupEventListeners() {
-    sendButton.addEventListener('click', handleSendMessage);
-    userInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            handleSendMessage();
-        }
-    });
+    startButton.addEventListener('click', handleStart);
 }
 
-// Manejar el envío de mensajes
-function handleSendMessage() {
-    const userMessage = userInput.value.trim();
-    
-    if (!state.questionsActive) {
-        // Primer mensaje, comenzar cuestionario
-        state.questionsActive = true;
-        userInput.value = '';
-        displayMessage("Comenzando el cuestionario...", 'system');
-        askNextQuestion();
-        return;
-    }
-    
-    if (userMessage !== '') {
-        displayMessage(userMessage, 'user');
-        processUserInput(userMessage);
-        userInput.value = '';
-    }
+// Manejar el inicio del cuestionario
+function handleStart() {
+    state.questionsActive = true;
+    startWrapper.style.display = 'none';
+    displayMessage("Comenzando el cuestionario...", 'system');
+    askNextQuestion();
 }
 
-// Procesar la entrada del usuario
-function processUserInput(input) {
+// Manejar la selección de opción (solo botones)
+function handleOptionSelect(optionIndex) {
     const currentQ = state.questionnaire[state.currentQuestion];
-    
-    if (currentQ && currentQ.options) {
-        const numericInput = parseInt(input);
-        
-        if (!isNaN(numericInput) && numericInput >= 1 && numericInput <= currentQ.options.length) {
-            // Guardar respuesta
-            state.answers[currentQ.id] = numericInput;
-            
-            // Avanzar al siguiente
-            state.currentQuestion++;
-            setTimeout(() => {
-                if (state.currentQuestion < state.questionnaire.length) {
-                    askNextQuestion();
-                } else {
-                    calculateResults();
-                    displayResults();
-                }
-            }, 800);
+    // Guardar respuesta
+    state.answers[currentQ.id] = optionIndex + 1;
+    // Avanzar al siguiente
+    state.currentQuestion++;
+    setTimeout(() => {
+        if (state.currentQuestion < state.questionnaire.length) {
+            askNextQuestion();
         } else {
-            displayMessage(`Por favor, ingresa un número entre 1 y ${currentQ.options.length}.`, 'system');
+            calculateResults();
+            displayResults();
         }
-    }
+    }, 800);
 }
 
 // Mostrar la siguiente pregunta
 function askNextQuestion() {
-    if (state.currentQuestion >= state.questionnaire.length || state.currentQuestion < 1) {
+    if (state.currentQuestion >= state.questionnaire.length || state.currentQuestion < 0) {
         return;
     }
     
+    state.currentQuestion++;
+
     const currentQ = state.questionnaire[state.currentQuestion];
     displayMessage(currentQ.text, 'assistant');
-    
+
     // Mostrar opciones de respuesta
     let optionsText = currentQ.options.map((opt, index) => `   ${index + 1} = ${opt.text}`).join('\n');
-    optionsText += '\n   (Escribe solo el número)';
-    
+    optionsText += '\n   (Selecciona una opción)';
     setTimeout(() => {
         displayMessage(optionsText, 'assistant');
         showOptions(currentQ.options);
@@ -216,18 +195,14 @@ function askNextQuestion() {
 
 // Mostrar opciones como botones
 function showOptions(options) {
-    // Ocultar la entrada de texto y mostrar opciones
-    inputWrapper.style.display = 'flex';
     optionsContainer.style.display = 'flex';
     optionsContainer.innerHTML = '';
-    
     options.forEach((option, index) => {
         const button = document.createElement('button');
         button.className = 'option-button';
         button.textContent = `${index + 1}: ${option.text}`;
         button.onclick = () => {
-            userInput.value = index + 1;
-            handleSendMessage();
+            handleOptionSelect(index);
             // Ocultar opciones después de seleccionar
             optionsContainer.style.display = 'none';
         };
@@ -280,32 +255,16 @@ function displayResults() {
 function showRestartButton() {
     optionsContainer.style.display = 'block';
     optionsContainer.innerHTML = '';
-    
+
     const restartButton = document.createElement('button');
     restartButton.className = 'restart-button';
     restartButton.textContent = 'Reiniciar Cuestionario';
     restartButton.onclick = resetQuestionnaire;
-    
+
     optionsContainer.appendChild(restartButton);
-    inputWrapper.style.display = 'none';
-}
 
-// Mostrar un mensaje en el área de chat
-function displayMessage(text, type) {
-    const messageElement = document.createElement('div');
-    messageElement.className = `message ${type}`;
-    
-    // Preservar saltos de línea
-    const formattedText = text.replace(/\n/g, '<br>');
-    messageElement.innerHTML = formattedText;
-    
-    messageArea.appendChild(messageElement);
-    scrollToBottom();
-}
-
-// Hacer scroll hasta el final del área de mensajes
-function scrollToBottom() {
-    messageArea.scrollTop = messageArea.scrollHeight;
+    // Hacer scroll al final para mostrar el botón y el resultado
+    setTimeout(scrollToBottom, 0);
 }
 
 // Reiniciar el cuestionario
@@ -317,15 +276,31 @@ function resetQuestionnaire() {
     state.signosAlarma = 0;
     state.probableDengue = false;
     state.questionsActive = false;
-    
+
     // Limpiar UI
     messageArea.innerHTML = '';
     optionsContainer.innerHTML = '';
     optionsContainer.style.display = 'none';
-    inputWrapper.style.display = 'flex';
-    
-    // Iniciar de nuevo
-    init();
+    startWrapper.style.display = 'flex';
+
+    // Mostrar mensaje de bienvenida al reiniciar
+    displayMessage(state.questionnaire[0].text, 'assistant');
+}
+
+// Mostrar un mensaje en el área de chat
+function displayMessage(text, type) {
+    const messageElement = document.createElement('div');
+    messageElement.className = `message ${type}`;
+    const formattedText = text.replace(/\n/g, '<br>');
+    messageElement.innerHTML = formattedText;
+    messageArea.appendChild(messageElement);
+
+    // Espera a que el DOM pinte el mensaje antes de hacer scroll
+    setTimeout(scrollToBottom, 0);
+}
+
+function scrollToBottom() {
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
 // Iniciar la aplicación cuando se carga la página

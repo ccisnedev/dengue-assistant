@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dengue Assistant</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="app-container">
-        <header class="app-header">
-            <h1>Asistente de Diagnóstico de Dengue</h1>
-        </header>
 
-        <main class="chat-container">
-            <div class="messages" id="message-area">
-                <!-- Messages will be added here dynamically -->
-            </div>
-        </main>
+    <!-- Encabezado -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dengue Assistant</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
 
-        <footer class="input-container" id="input-container">
-            <div class="input-wrapper" id="input-wrapper">
-                <input type="text" id="user-input" class="user-input" placeholder="Escribe tu respuesta aquí...">
-                <button id="send-button" class="send-button">Enviar</button>
-            </div>
-            <div class="options-container" id="options-container" style="display: none;">
-                <!-- Option buttons will be added here dynamically -->
-            </div>
-        </footer>
-    </div>
+    <!-- Cuerpo -->
+    <body>
+        <div class="app-container">
+            <header class="app-header">
+                <h1>Asistente de Diagnóstico de Dengue</h1>
+            </header>
 
-    <script src="script.js" type="module"></script>
-</body>
+            <main id="chat-container" class="chat-container">
+                <div class="messages" id="message-area">
+                    <!-- Messages will be added here dynamically -->
+                </div>
+            </main>
+
+            <footer class="input-container" id="input-container">
+                <!-- Botón de iniciar centrado y estilizado -->
+                <div class="start-wrapper" id="start-wrapper">
+                    <button id="start-button" class="start-button blue-centered">Iniciar</button>
+                </div>
+                <div class="options-container" id="options-container" style="display: none;">
+                    <!-- Option buttons will be added here dynamically -->
+                </div>
+            </footer>
+        </div>
+
+        <script src="script.js" type="module"></script>
+    </body>
 </html>
