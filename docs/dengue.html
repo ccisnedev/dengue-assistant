@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente de Diagnóstico de Dengue</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --gray: #95a5a6;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .survey-container {
+            display: none;
+        }
+        
+        .question-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .question-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question-text {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .options {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .option {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            font-weight: 500;
+        }
+        
+        .option:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .option.selected {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .response {
+            margin-top: 15px;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .response-yes {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
+            border-left: 4px solid var(--danger);
+        }
+        
+        .response-no {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--dark);
+        }
+        
+        .btn-secondary {
+            background-color: var(--gray);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .result-container {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .result-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .result-high-risk {
+            color: var(--danger);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .result-low-risk {
+            color: var(--success);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .recommendations {
+            margin-top: 20px;
+        }
+        
+        .recommendations li {
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 600px) {
+            .options {
+                flex-direction: column;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .question-text {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Asistente de Diagnóstico de Dengue</h1>
+            <p>Responda las preguntas para evaluar sus síntomas</p>
+        </header>
+        
+        <div class="intro" id="intro-screen">
+            <h2>Bienvenido al Asistente de Dengue</h2>
+            <p>Este cuestionario le ayudará a evaluar si sus síntomas podrían corresponder a dengue.</p>
+            <p>Por favor, responda con sinceridad todas las preguntas.</p>
+            <div class="buttons">
+                <button class="btn btn-primary" onclick="startSurvey()">Comenzar Encuesta</button>
+            </div>
+        </div>
+        
+        <div class="survey-container" id="survey-container">
+            <div id="question-1" class="question-card">
+                <div class="question-text">1. ¿Ha tenido fiebre mayor a 38°C de inicio brusco en los últimos 2-7 días?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(1, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(1, 2)">No</div>
+                </div>
+                <div id="response-1" class="response"></div>
+            </div>
+
+            <div id="question-2" class="question-card">
+                <div class="question-text">2. ¿Siente dolor detrás de los ojos que empeora con el movimiento ocular?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(2, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(2, 2)">No</div>
+                </div>
+                <div id="response-2" class="response"></div>
+            </div>
+
+            <div id="question-3" class="question-card">
+                <div class="question-text">3. ¿Tiene dolores intensos en músculos o articulaciones?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(3, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(3, 2)">No</div>
+                </div>
+                <div id="response-3" class="response"></div>
+            </div>
+            
+            <div id="question-4" class="question-card">
+                <div class="question-text">4. ¿Experimenta dolor de cabeza intenso y persistente?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(4, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(4, 2)">No</div>
+                </div>
+                <div id="response-4" class="response"></div>
+            </div>
+
+            <div id="question-5" class="question-card">
+                <div class="question-text">5. ¿Ha notado erupción o manchas rojas en la piel (similar al sarampión)?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(5, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(5, 2)">No</div>
+                </div>
+                <div id="response-5" class="response"></div>
+            </div>
+            
+            <div id="question-6" class="question-card">
+                <div class="question-text">6. ¿Ha tenido náuseas o vómitos en las últimas 24 horas?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(6, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(6, 2)">No</div>
+                </div>
+                <div id="response-6" class="response"></div>
+            </div>
+
+            <div id="question-7" class="question-card">
+                <div class="question-text">7. ¿Siente dolor intenso en el abdomen?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(7, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(7, 2)">No</div>
+                </div>
+                <div id="response-7" class="response"></div>
+            </div>
+            
+            <div id="question-8" class="question-card">
+                <div class="question-text">8. ¿Ha disminuido su apetito significativamente?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(8, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(8, 2)">No</div>
+                </div>
+                <div id="response-8" class="response"></div>
+            </div>
+
+            <div id="question-9" class="question-card">
+                <div class="question-text">9. ¿Ha presentado sangrado de encías, nariz, o moretones sin causa aparente?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(9, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(9, 2)">No</div>
+                </div>
+                <div id="response-9" class="response"></div>
+            </div>
+
+            <div id="question-10" class="question-card">
+                <div class="question-text">10. ¿Ha vomitado más de 3 veces en un día?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(10, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(10, 2)">No</div>
+                </div>
+                <div id="response-10" class="response"></div>
+            </div>
+
+            <div id="question-11" class="question-card">
+                <div class="question-text">11. ¿Se siente excesivamente cansado, somnoliento o irritable?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(11, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(11, 2)">No</div>
+                </div>
+                <div id="response-11" class="response"></div>
+            </div>
+
+            <div id="question-12" class="question-card">
+                <div class="question-text">12. ¿Ha tenido mareos al levantarse o desmayos?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(12, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(12, 2)">No</div>
+                </div>
+                <div id="response-12" class="response"></div>
+            </div>
+
+            <div id="question-13" class="question-card">
+                <div class="question-text">13. ¿Ha notado hinchazón en manos, pies o abdomen?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(13, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(13, 2)">No</div>
+                </div>
+                <div id="response-13" class="response"></div>
+            </div>
+
+            <div id="question-14" class="question-card">
+                <div class="question-text">14. ¿Ha estado en zonas con alta presencia de mosquitos o casos reportados de dengue?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(14, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(14, 2)">No</div>
+                </div>
+                <div id="response-14" class="response"></div>
+            </div>
+
+            <div id="question-15" class="question-card">
+                <div class="question-text">15. ¿Ha tenido dengue en los últimos 3 meses?</div>
+                <div class="options">
+                    <div class="option" data-value="1" onclick="selectOption(15, 1)">Sí</div>
+                    <div class="option" data-value="2" onclick="selectOption(15, 2)">No</div>
+                </div>
+                <div id="response-15" class="response"></div>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn btn-primary" onclick="evaluateSymptoms()">Evaluar Síntomas</button>
+                <button class="btn btn-secondary" onclick="resetSurvey()">Reiniciar Encuesta</button>
+            </div>
+            
+            <div id="result-container" class="result-container">
+                <div class="result-title">Resultado del Diagnóstico</div>
+                <div id="result-text"></div>
+                <div id="recommendations" class="recommendations"></div>
+                <div class="buttons" style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="resetSurvey()">Realizar otra evaluación</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        const responses = {};
+        const questions = {
+            1: "¿Ha tenido fiebre mayor a 38°C de inicio brusco en los últimos 2-7 días?",
+            2: "¿Siente dolor detrás de los ojos que empeora con el movimiento ocular?",
+            3: "¿Tiene dolores intensos en músculos o articulaciones?",
+            4: "¿Experimenta dolor de cabeza intenso y persistente?",
+            5: "¿Ha notado erupción o manchas rojas en la piel (similar al sarampión)?",
+            6: "¿Ha tenido náuseas o vómitos en las últimas 24 horas?",
+            7: "¿Siente dolor intenso en el abdomen?",
+            8: "¿Ha disminuido su apetito significativamente?",
+            9: "¿Ha presentado sangrado de encías, nariz, o moretones sin causa aparente?",
+            10: "¿Ha vomitado más de 3 veces en un día?",
+            11: "¿Se siente excesivamente cansado, somnoliento o irritable?",
+            12: "¿Ha tenido mareos al levantarse o desmayos?",
+            13: "¿Ha notado hinchazón en manos, pies o abdomen?",
+            14: "¿Ha estado en zonas con alta presencia de mosquitos o casos reportados de dengue?",
+            15: "¿Ha tenido dengue en los últimos 3 meses?"
+        };
+        
+        // Iniciar la encuesta
+        function startSurvey() {
+            document.getElementById('intro-screen').style.display = 'none';
+            document.getElementById('survey-container').style.display = 'block';
+            resetSurvey();
+        }
+        
+        // Seleccionar una opción
+        function selectOption(questionId, option) {
+            // Guardar la respuesta
+            responses[questionId] = option;
+            
+            // Actualizar la interfaz
+            const questionElement = document.getElementById(`question-${questionId}`);
+            const options = questionElement.querySelectorAll('.option');
+            const responseElement = document.getElementById(`response-${questionId}`);
+            
+            // Remover selección previa
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Marcar opción seleccionada
+            options[option - 1].classList.add('selected');
+            
+            // Mostrar respuesta
+            responseElement.style.display = 'block';
+            responseElement.textContent = `Ud. respondió: ${option === 1 ? 'Sí' : 'No'}`;
+            responseElement.className = `response ${option === 1 ? 'response-yes' : 'response-no'}`;
+        }
+        
+        // Evaluar síntomas
+        function evaluateSymptoms() {
+            const resultContainer = document.getElementById('result-container');
+            const resultText = document.getElementById('result-text');
+            const recommendations = document.getElementById('recommendations');
+            
+            // Verificar si todas las preguntas fueron respondidas
+            const unansweredQuestions = Object.keys(questions).filter(q => !responses[q]);
+            if (unansweredQuestions.length > 0) {
+                alert(`Por favor responda las siguientes preguntas: ${unansweredQuestions.join(', ')}`);
+                return;
+            }
+            
+            // Lógica de diagnóstico (simplificada)
+             const hasMusclePain = responses[3] === 1;
+            const hasNausea = responses[6] === 1;
+            const hasAbdominalPain = responses[7] === 1;
+            const hasSevereHeadache = responses[4] === 1;
+            const hasskinRash = responses[5] === 1;
+
+            
+            // Mostrar resultados
+            resultContainer.style.display = 'block';
+            
+            if (hasMusclePain && (hasNausea || hasAbdominalPain || hasSevereHeadache || hasskinRash  )) {
+                resultText.innerHTML = `<p class="result-high-risk">Su perfil de síntomas sugiere un posible caso de dengue.</p>`;
+                recommendations.innerHTML = `
+                    <p>Recomendaciones:</p>
+                    <ul>
+                        <li>Acuda inmediatamente a un centro de salud para evaluación médica</li>
+                        <li>Manténgase hidratado (beba abundantes líquidos)</li>
+                        <li>Evite medicamentos que contengan ácido acetilsalicílico (aspirina)</li>
+                        <li>Descanse y controle su temperatura regularmente</li>
+                        <li>Use repelente de mosquitos para evitar contagiar a otros</li>
+                        <li>Monitoree si aparecen signos de alarma: sangrado, dolor abdominal intenso, vómitos persistentes</li>
+                    </ul>
+                `;
+            } else {
+                resultText.innerHTML = `<p class="result-low-risk">Sus síntomas no son típicos de dengue, pero podría tratarse de otra condición.</p>`;
+                recommendations.innerHTML = `
+                    <p>Recomendaciones:</p>
+                    <ul>
+                        <li>Monitoree sus síntomas durante las próximas 48 horas</li>
+                        <li>Si los síntomas persisten o empeoran, consulte a un médico</li>
+                        <li>Manténgase hidratado</li>
+                        <li>Descanse adecuadamente</li>
+                        <li>Considere la posibilidad de otras enfermedades como COVID-19 o influenza</li>
+                    </ul>
+                `;
+            }
+            
+            // Desplazarse a los resultados
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Reiniciar la encuesta
+        function resetSurvey() {
+            // Limpiar respuestas
+            for (const key in responses) {
+                delete responses[key];
+            }
+            
+            // Resetear interfaz
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            document.querySelectorAll('.response').forEach(res => {
+                res.style.display = 'none';
+            });
+            
+            document.getElementById('result-container').style.display = 'none';
+            
+            // Volver al inicio del cuestionario
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
