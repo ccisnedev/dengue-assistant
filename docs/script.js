@@ -237,8 +237,8 @@ function displayResults() {
     displayMessage("Analizando sus respuestas...", 'system');
     
     setTimeout(() => {
-        displayMessage("********************************************\n*              RESULTADO FINAL             *\n********************************************", 'assistant');
-        
+        displayMessage("*************************\n*   RESULTADO FINAL   *\n*************************", 'assistant');
+
         setTimeout(() => {
             if (state.signosAlarma > 0) {
                 displayMessage("[!] SIGNOS DE ALARMA DETECTADOS: POSIBLE DENGUE GRAVE\n    --> BUSQUE ATENCIÓN MÉDICA DE INMEDIATO <--", 'assistant urgent');

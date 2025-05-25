@@ -172,8 +172,9 @@ body {
 .options-container {
     width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centra verticalmente el contenido */
+    flex-direction: row; /* Siempre en fila, también en móvil */
+    flex-wrap: wrap;     /* Permite que bajen si no caben */
+    justify-content: center;
     align-items: center;
     gap: 1em;
     transition: opacity 0.2s;
@@ -181,7 +182,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%; /* Ocupa todo el alto del contenedor padre */
+    height: 100%;
 }
 
 .options-container[style*="display: none"] {
@@ -266,12 +267,7 @@ body {
     .app-header h1 {
         font-size: 1.5rem;
     }
-    
-    .options-container {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-    
+    /* Ya no es necesario cambiar flex-direction aquí */
     .option-button {
         flex: 1 0 45%;
     }
