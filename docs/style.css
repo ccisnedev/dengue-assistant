@@ -111,6 +111,22 @@ body {
     padding: 1rem;
     border-top: 1px solid #eee;
     background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0;
+}
+
+.action-container {
+    height: 120px;
+    min-height: 120px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 .input-wrapper {
@@ -154,14 +170,25 @@ body {
 
 /* Option buttons */
 .options-container {
-    min-height: 56px; /* altura mínima para 1 botón */
-    height: 56px;     /* altura fija para evitar saltos, ajusta según tus botones */
+    width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente el contenido */
     align-items: center;
     gap: 1em;
     transition: opacity 0.2s;
-    /* Asegura que siempre ocupe espacio aunque esté oculta */
+    visibility: visible;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%; /* Ocupa todo el alto del contenedor padre */
+}
+
+.options-container[style*="display: none"] {
+    display: flex !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    opacity: 0.1 !important;
 }
 
 .option-button {
@@ -186,7 +213,8 @@ body {
 /* Restart button */
 .restart-button {
     display: block;
-    width: 100%;
+    width: 60%; /* Más angosto para mejor centrado visual */
+    margin: 0 auto;
     padding: 0.8rem;
     margin-top: 0.5rem;
     background-color: #28a745;
@@ -208,7 +236,10 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin: 2rem 0 1rem 0;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 .start-button.blue-centered {

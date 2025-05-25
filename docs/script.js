@@ -126,7 +126,7 @@ const questionnaire = [
 // Elementos del DOM
 const messageArea = document.getElementById('message-area');
 const chatContainer = document.getElementById('chat-container');
-// Elimina inputWrapper y userInput
+const actionContainer = document.getElementById('action-container');
 const startWrapper = document.getElementById('start-wrapper');
 const startButton = document.getElementById('start-button');
 const optionsContainer = document.getElementById('options-container');
@@ -134,7 +134,6 @@ const optionsContainer = document.getElementById('options-container');
 // Inicializar la aplicación
 function init() {
     state.questionnaire = [...questionnaire];
-    // Mostrar mensaje de bienvenida siempre al iniciar
     messageArea.innerHTML = '';
     displayMessage(state.questionnaire[0].text, 'assistant');
     setupEventListeners();
@@ -152,6 +151,7 @@ function setupEventListeners() {
 function handleStart() {
     state.questionsActive = true;
     startWrapper.style.display = 'none';
+    optionsContainer.style.display = 'flex';
     displayMessage("Comenzando el cuestionario...", 'system');
     askNextQuestion();
 }
@@ -256,7 +256,7 @@ function displayResults() {
 
 // Mostrar botón de reinicio
 function showRestartButton() {
-    optionsContainer.style.display = 'block';
+    optionsContainer.style.display = 'flex';
     optionsContainer.innerHTML = '';
 
     const restartButton = document.createElement('button');
@@ -266,7 +266,6 @@ function showRestartButton() {
 
     optionsContainer.appendChild(restartButton);
 
-    // Hacer scroll al final para mostrar el botón y el resultado
     setTimeout(scrollToBottom, 0);
 }
 
