@@ -159,6 +159,8 @@ function handleStart() {
 // Manejar la selección de opción (solo botones)
 function handleOptionSelect(optionIndex) {
     const currentQ = state.questionnaire[state.currentQuestion];
+    // Mostrar respuesta del usuario en el chat
+    displayMessage(currentQ.options[optionIndex].text, 'user');
     // Guardar respuesta
     state.answers[currentQ.id] = optionIndex + 1;
     // Avanzar al siguiente
@@ -184,11 +186,12 @@ function askNextQuestion() {
     const currentQ = state.questionnaire[state.currentQuestion];
     displayMessage(currentQ.text, 'assistant');
 
-    // Mostrar opciones de respuesta
-    let optionsText = currentQ.options.map((opt, index) => `   ${index + 1} = ${opt.text}`).join('\n');
-    optionsText += '\n   (Selecciona una opción)';
+    // Mostrar cada opción como mensaje separado para mejor visibilidad
     setTimeout(() => {
-        displayMessage(optionsText, 'assistant');
+        currentQ.options.forEach((opt, index) => {
+            displayMessage(`   ${index + 1} = ${opt.text}`, 'assistant');
+        });
+        displayMessage('   (Selecciona una opción)', 'assistant');
         showOptions(currentQ.options);
     }, 500);
 }
