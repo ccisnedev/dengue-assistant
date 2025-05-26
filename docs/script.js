@@ -305,5 +305,18 @@ function scrollToBottom() {
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
+// Ajusta el espacio inferior dinámicamente según el área segura del dispositivo (opcional avanzado)
+function adjustBottomSpacer() {
+    const spacer = document.getElementById('bottom-spacer');
+    if (window.visualViewport) {
+        // Usa visualViewport si está disponible
+        const extra = window.innerHeight - window.visualViewport.height;
+        spacer.style.height = (extra > 0 ? extra : 0) + 'px';
+    }
+}
+window.addEventListener('resize', adjustBottomSpacer);
+window.addEventListener('orientationchange', adjustBottomSpacer);
+document.addEventListener('DOMContentLoaded', adjustBottomSpacer);
+
 // Iniciar la aplicación cuando se carga la página
 document.addEventListener('DOMContentLoaded', init);
