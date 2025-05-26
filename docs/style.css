@@ -23,6 +23,7 @@ body {
     margin: 0 auto;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Evita scroll doble */
 }
 
 /* Header */
@@ -41,13 +42,13 @@ body {
 
 /* Chat container */
 .chat-container {
-    flex: 1;
-    height: 60vh; /* o el alto que prefieras */
+    flex: 1 1 auto;
     overflow-y: auto;
     background: #fafbfc;
     padding: 0;
     display: flex;
     flex-direction: column;
+    min-height: 0; /* Permite que flexbox calcule bien el espacio */
 }
 
 .messages {
@@ -108,7 +109,7 @@ body {
 
 /* Input container */
 .input-container {
-    padding: 1rem;
+    padding: 0 1rem 0 1rem; /* Solo padding horizontal */
     border-top: 1px solid #eee;
     background-color: #fff;
     display: flex;
@@ -116,6 +117,7 @@ body {
     align-items: center;
     justify-content: flex-end;
     gap: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0); /* Espacio dinámico para barras inferiores */
 }
 
 .action-container {
@@ -260,6 +262,20 @@ body {
 .start-button.blue-centered:focus {
     background-color: #1565c0;
     transform: translateY(-2px) scale(1.04);
+}
+
+/* Spacer for mobile navigation */
+#bottom-spacer {
+    width: 100%;
+    height: env(safe-area-inset-bottom, 0);
+    /* height: 12dvh; Altura fija para navegadores móviles */
+
+}
+
+@media (max-width: 600px) {
+    #bottom-spacer {
+        min-height: 80px; /* Garantiza espacio mínimo en móviles */
+    }
 }
 
 /* Responsive design for tablet and desktop */
