@@ -46,3 +46,6 @@ app.*.map.json
 
 # Archivos auxiliares para desarrollo
 .dev_aux
+
+# Carpeta release
+/release
