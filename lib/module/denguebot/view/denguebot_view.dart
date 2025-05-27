@@ -192,7 +192,7 @@ class _ChatMessage {
 
 class _MessageBubble extends StatelessWidget {
   final _ChatMessage msg;
-  const _MessageBubble(this.msg, {super.key});
+  const _MessageBubble(this.msg);
 
   @override
   Widget build(BuildContext context) {
