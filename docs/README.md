@@ -9,6 +9,7 @@ Esta es una implementación web responsiva (mobile-first) del Asistente de Diagn
 - 🌐 Funciona completamente offline (sin conexión a internet)
 - 🔄 Cuestionario completo de evaluación de síntomas de dengue
 - 📋 Resultados inmediatos con recomendaciones según los síntomas
+- 🔒 Página de [Política de Privacidad](privacidad.html) incluida
 
 ## Uso del Asistente
 

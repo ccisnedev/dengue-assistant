@@ -40,6 +40,16 @@ body {
     margin: 0;
 }
 
+.privacy-link {
+    margin-top: 0.5rem;
+}
+
+.privacy-link a {
+    color: #fff;
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+
 /* Chat container */
 .chat-container {
     flex: 1 1 auto;

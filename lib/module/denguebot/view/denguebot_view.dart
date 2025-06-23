@@ -134,6 +134,7 @@ class _DenguebotViewState extends State<DenguebotView> {
                   onPressed: _startQuiz,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue[700],
+                    foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                   ),
@@ -170,6 +171,7 @@ class _DenguebotViewState extends State<DenguebotView> {
                 onPressed: _restart,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green[700],
+                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
