@@ -1,50 +1,76 @@
-# 🦟 Dengue Assistant
+# 🏠 Navicury: Tarea para practicar diversas heramientas Flutter
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/status-in%20progress-yellow.svg)]()
-
-## Descripción
-
-Dengue Assistant es un proyecto abierto cuyo objetivo es ayudar en la detección temprana y orientación sobre el dengue, mediante herramientas digitales accesibles para la población general.
-
-- 📚 **Investigación bibliográfica:** Se ha realizado una revisión bibliográfica inicial para fundamentar el desarrollo del cuestionario y la lógica de la aplicación. Puedes consultar el detalle en el archivo [research.md](./research.md).
-
-- 📝 **Pseudocódigo:** Como siguiente paso, se ha desarrollado un programa en pseudocódigo utilizando PSeInt, el cual será empleado para pruebas y validaciones iniciales antes de implementar la lógica en una aplicación real.
-  - El archivo [`dengue-assistant.psc`](./dengue-assistant.psc) está escrito en pseudocódigo para [PSeInt](https://pseint.sourceforge.net/). Puedes descargar PSeInt desde su [sitio oficial](https://pseint.sourceforge.net/).
-
-- 💻 **Demo web:** En la carpeta [`docs/`](./docs/) encontrarás una demo funcional del cuestionario, implementada con HTML, CSS y JavaScript. Puedes abrir el archivo `index.html` en tu navegador para probar cómo funciona la lógica del cuestionario de manera interactiva.  
-  - También puedes probar la demo en línea aquí: [Ver demo web](https://ccisnedev-open.github.io/dengue-assistant/)
-
-## Roadmap
-
-1. **Investigación:** Revisión de literatura y guías clínicas sobre síntomas y signos de alarma del dengue.
-2. **Pseudocódigo en PSeInt:** Desarrollo y validación de la lógica de cuestionario en pseudocódigo.
-3. **Crear aplicación Flutter:** Implementación de la app móvil multiplataforma.
-4. **Publicar en PlayStore:** Lanzamiento oficial para usuarios Android.
-5. **Publicar en web:** Versión web accesible desde cualquier navegador.
-6. **Adaptar como chatbot de WhatsApp:** Conversión de la lógica a un bot conversacional.
-7. **Agregar soporte de inteligencia artificial:** Integración de un modelo LLM para interpretar respuestas libres del usuario, sin requerir coincidencia exacta.
-8. **Publicar chatbot de WhatsApp potenciado con AI:** Lanzamiento del bot inteligente para WhatsApp.
-
-## ¿Por qué este proyecto?
-
-- Facilita la autoevaluación y orientación sobre el dengue en comunidades vulnerables.
-- Promueve la atención médica oportuna y la prevención de complicaciones graves.
-- Es de código abierto y busca la colaboración de la comunidad.
-
-## Cómo contribuir
-
-¡Las contribuciones son bienvenidas! Puedes colaborar en cualquiera de las etapas del roadmap, ya sea mejorando la lógica, aportando ideas, desarrollando código o ayudando con la documentación.
-
-1. Haz un fork del repositorio.
-2. Crea una rama para tu feature o corrección.
-3. Haz un pull request describiendo tus cambios.
-
-## Licencia
-
-Este proyecto está licenciado bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+Bienvenido a **Navicury**
 
 ---
 
-**Hecho con ❤️ por ccisnedev y colaboradores.**
+## ✨ Características Destacadas
 
+Widgets personalizados
+fingerprint_scanner_widget.dart: Un widget reutilizable para el área de huellas dactilares. Puede ser un contenedor con un borde decorativo y un detector de gestos para gestionar los toques. Muestra un icono de huella dactilar y texto explicativo.
+
+room_selector_widget.dart: Este widget representa cada opción de la sala (A, B, C). Es básicamente un botón estilizado. Puedes crear un widget con estado para gestionar su estado seleccionado, cambiando su color o borde al tocarlo.
+
+connected_device_widget.dart: Este widget, similar a una tarjeta, se utiliza para cada dispositivo conectado. Contiene un icono y el nombre del dispositivo. Puede ser una tarjeta o un contenedor con borde, icono y texto. Usa un tintero para que sea táctil.
+
+light_slider_widget.dart: Un widget para controlar el brillo. Utilizaría un widget Slider de Flutter, un widget de Texto para mostrar el valor porcentual actual y un ícono en cada lado para representar el brillo mínimo y máximo.
+
+---
+
+## 📸 Capturas de Pantalla
+
+_Aquí puedes añadir capturas de pantalla de la aplicación en acción para mostrar su atractivo visual. Simplemente reemplaza estos textos por las imágenes._
+
+| Pantalla de Acceso | Pantalla Principal | Pantalla de Control |
+| :---: | :---: | :---: |
+| ![Imagen de la pantalla de login con el fondo del termostato y el botón de huella](https://i.imgur.com/your-login-image.png) | ![Imagen de la pantalla principal con espacios y dispositivos](https://i.imgur.com/your-home-screen.png) | ![Imagen de la pantalla de control con los sliders de luz](https://i.imgur.com/your-sliders-screen.png) |
+
+---
+
+## 🚀 Cómo Ejecutar el Proyecto
+
+Este proyecto está construido con Flutter. Para ejecutarlo localmente, sigue estos sencillos pasos:
+
+1.  **Clona el repositorio:**
+    ```bash
+    git clone [URL_DE_TU_REPOSITORIO]
+    cd navicury
+    ```
+
+2.  **Instala las dependencias:**
+    ```bash
+    flutter pub get
+    ```
+
+3.  **Ejecuta la aplicación:**
+    ```bash
+    flutter run
+    ```
+    (Asegúrate de tener un emulador o un dispositivo físico conectado).
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+* **[Flutter](https://flutter.dev/)** - Framework de UI de código abierto.
+* **[Dart](https://dart.dev/)** - Lenguaje de programación optimizado para el cliente.
+* **[Android Studio / VS Code](https://code.visualstudio.com/)** - Entorno de desarrollo.
+
+---
+
+## 🤝 Contribuciones
+
+Las contribuciones son bienvenidas. Si encuentras un error o tienes una idea para una nueva característica, no dudes en abrir un *issue* o enviar un *pull request*.
+
+---
+
+## 👨‍💻 Autor
+
+* **Tu Nombre** - Desarrollador Principal
+
+_Siéntete libre de conectar conmigo en [Tu_LinkedIn](https://www.linkedin.com/in/tuperfil) o [Tu_SitioWeb](https://tupaginaweb.com)._
+
+---
+<p align="center">
+  Hecho con ❤️ por [CtechSoftware](https://github.com/CtechSoftware)
+</p>
